@@ -6,7 +6,7 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v9.0": {
-      "Dreamstreaming.SeerrDiscord/1.0.1": {
+      "Dreamstreaming.SeerrDiscord/1.0.2": {
         "runtime": {
           "Dreamstreaming.SeerrDiscord.dll": {}
         }
@@ -14,7 +14,7 @@
     }
   },
   "libraries": {
-    "Dreamstreaming.SeerrDiscord/1.0.1": {
+    "Dreamstreaming.SeerrDiscord/1.0.2": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

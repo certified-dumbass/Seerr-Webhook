@@ -1602,7 +1602,7 @@
     "C:\\Users\\Emiel\\.nuget\\packages\\": {}
   },
   "project": {
-    "version": "1.0.1",
+    "version": "1.0.2",
     "restore": {
       "projectUniqueName": "C:\\Users\\Emiel\\Documents\\Jellyfin Plugins\\Seerr Webhook\\Dreamstreaming.SeerrDiscord.csproj",
       "projectName": "Dreamstreaming.SeerrDiscord",

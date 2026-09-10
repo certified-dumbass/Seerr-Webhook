@@ -2,124 +2,6 @@
 <html>
 <head>
     <title>Seerr Discord</title>
-
-    <style>
-        .seerr-config {
-            max-width: 900px;
-        }
-
-        .seerr-intro {
-            margin-bottom: 1.5em;
-            line-height: 1.5;
-        }
-
-        .seerr-section {
-            margin-top: 2em;
-            margin-bottom: 2em;
-        }
-
-        .seerr-section-header {
-            margin-bottom: 1em;
-        }
-
-        .seerr-section-header h2 {
-            margin-bottom: 0.25em;
-        }
-
-        .seerr-divider {
-            margin-top: 2em;
-            margin-bottom: 2em;
-            border: 0;
-            border-top: 1px solid rgba(255, 255, 255, 0.15);
-        }
-
-        .seerr-message-box {
-            width: 100% !important;
-            min-height: 140px;
-            resize: vertical;
-            box-sizing: border-box;
-            padding: 12px !important;
-            line-height: 1.5;
-            font-size: 1rem;
-        }
-
-        .seerr-message-description {
-            margin-top: 7px;
-            line-height: 1.45;
-        }
-
-        .seerr-small-description {
-            line-height: 1.45;
-        }
-
-        .seerr-button-spacing {
-            margin-top: 1em;
-        }
-
-        .seerr-import-info {
-            margin-top: 0.75em;
-            margin-bottom: 1em;
-            line-height: 1.5;
-            opacity: 0.85;
-        }
-
-        .seerr-user-card {
-            padding: 18px;
-            margin-bottom: 16px;
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .seerr-user-card h3 {
-            margin-top: 0;
-            margin-bottom: 12px;
-        }
-
-        .seerr-user-id {
-            margin-top: 8px;
-            opacity: 0.7;
-            font-size: 0.9em;
-            word-break: break-all;
-        }
-
-        .seerr-placeholder-list {
-            margin-top: 6px;
-            line-height: 1.5;
-            word-break: break-word;
-        }
-
-        .seerr-config .inputContainer {
-            margin-bottom: 1.2em;
-        }
-
-        .seerr-config .checkboxContainer {
-            margin-bottom: 1em;
-        }
-
-        .seerr-hidden {
-            display: none;
-        }
-
-        .seerr-empty-state {
-            padding: 18px;
-            margin-top: 1em;
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px dashed rgba(255, 255, 255, 0.12);
-            line-height: 1.5;
-        }
-
-        @media (max-width: 600px) {
-            .seerr-message-box {
-                min-height: 160px;
-            }
-
-            .seerr-user-card {
-                padding: 12px;
-            }
-        }
-    </style>
 </head>
 
 <body>
@@ -130,1109 +12,1246 @@
     class="page type-interior pluginConfigurationPage"
     data-require="emby-input,emby-button,emby-checkbox">
 
-    <div data-role="content">
-        <div class="content-primary seerr-config">
+    <style>
 
-            <form id="SeerrDiscordConfigForm">
+        #SeerrDiscordConfigPage .content-primary {
+            max-width: 900px;
+        }
 
-                <div class="sectionTitleContainer flex align-items-center">
-                    <h2 class="sectionTitle">
-                        Seerr Discord
-                    </h2>
+        #SeerrDiscordConfigPage .seerr-section {
+            margin-bottom: 32px;
+            padding: 24px;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 10px;
+        }
+
+        #SeerrDiscordConfigPage .seerr-section h2 {
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        #SeerrDiscordConfigPage .inputContainer {
+            width: 100%;
+            max-width: none;
+        }
+
+        #SeerrDiscordConfigPage input[type="text"],
+        #SeerrDiscordConfigPage input[type="password"],
+        #SeerrDiscordConfigPage input[type="url"] {
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /*
+         * IMPORTANT:
+         * Force Jellyfin's textarea styling to be wide.
+         */
+
+        #SeerrDiscordConfigPage textarea.seerr-message-box {
+            display: block !important;
+
+            width: 100% !important;
+            min-width: 100% !important;
+            max-width: 100% !important;
+
+            height: 85px !important;
+            min-height: 85px !important;
+
+            box-sizing: border-box !important;
+
+            resize: vertical !important;
+
+            white-space: pre-wrap;
+
+            font-family: inherit;
+            font-size: 1em;
+            line-height: 1.4;
+        }
+
+        #SeerrDiscordConfigPage .seerr-message-container {
+            display: block;
+            width: 100%;
+            max-width: none !important;
+        }
+
+        #SeerrDiscordConfigPage .seerr-help {
+            opacity: 0.7;
+            margin-top: 6px;
+            font-size: 0.9em;
+        }
+
+        #SeerrDiscordConfigPage .seerr-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        #SeerrDiscordConfigPage .seerr-user-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        #SeerrDiscordConfigPage .seerr-user-card {
+            padding: 18px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        #SeerrDiscordConfigPage .seerr-user-title {
+            font-size: 1.1em;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        #SeerrDiscordConfigPage .seerr-empty-state {
+            margin-top: 18px;
+            padding: 20px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.04);
+            opacity: 0.8;
+        }
+
+        #SeerrDiscordConfigPage .seerr-save {
+            margin-top: 25px;
+            margin-bottom: 40px;
+        }
+
+    </style>
+
+
+    <div class="content-primary">
+
+        <form id="SeerrDiscordConfigForm">
+
+
+            <!-- ========================== -->
+            <!-- GENERAL -->
+            <!-- ========================== -->
+
+            <div class="seerr-section">
+
+                <h2>General</h2>
+
+                <label class="emby-checkbox-label">
+                    <input
+                        id="PluginEnabled"
+                        type="checkbox"
+                        is="emby-checkbox" />
+
+                    <span>Enable Seerr Discord</span>
+                </label>
+
+
+                <div class="inputContainer">
+                    <label
+                        class="inputLabel inputLabelUnfocused"
+                        for="SeerrWebhookToken">
+                        Seerr Webhook Token
+                    </label>
+
+                    <input
+                        id="SeerrWebhookToken"
+                        type="password"
+                        is="emby-input" />
+
+                    <div class="seerr-help">
+                        Optional shared secret used to protect the Seerr webhook endpoint.
+                    </div>
                 </div>
 
-                <p class="seerr-intro">
-                    Connect Seerr requests to Discord and notify users when
-                    their requested media becomes available.
-                </p>
+            </div>
 
-                <!-- GENERAL -->
 
-                <div class="seerr-section">
 
-                    <div class="sectionTitleContainer seerr-section-header">
-                        <h2 class="sectionTitle">
-                            General
-                        </h2>
-                    </div>
+            <!-- ========================== -->
+            <!-- NEW REQUESTS -->
+            <!-- ========================== -->
 
-                    <div class="checkboxContainer checkboxContainer-withDescription">
-                        <label class="emby-checkbox-label">
-                            <input
-                                id="PluginEnabled"
-                                type="checkbox"
-                                is="emby-checkbox" />
+            <div class="seerr-section">
 
-                            <span>
-                                Enable plugin
-                            </span>
-                        </label>
+                <h2>New Requests</h2>
 
-                        <div class="fieldDescription seerr-small-description">
-                            Enables or disables all Seerr Discord functionality.
-                        </div>
-                    </div>
+                <label class="emby-checkbox-label">
+                    <input
+                        id="IncomingRequestEnabled"
+                        type="checkbox"
+                        is="emby-checkbox" />
 
-                    <div class="inputContainer">
+                    <span>Enable new request notifications</span>
+                </label>
 
-                        <label
-                            class="inputLabel inputLabelUnfocused"
-                            for="SeerrWebhookToken">
 
-                            Seerr webhook token
-                        </label>
+                <div class="inputContainer">
 
-                        <input
-                            id="SeerrWebhookToken"
-                            type="password"
-                            is="emby-input"
-                            autocomplete="off" />
+                    <label
+                        class="inputLabel inputLabelUnfocused"
+                        for="IncomingRequestWebhook">
+                        Discord Webhook URL
+                    </label>
 
-                        <div class="fieldDescription seerr-small-description">
-                            Optional shared secret used to secure incoming Seerr webhook requests.
-                            Leave this empty if token validation is not required.
-                        </div>
+                    <input
+                        id="IncomingRequestWebhook"
+                        type="url"
+                        is="emby-input" />
 
+                </div>
+
+
+                <div class="inputContainer">
+
+                    <label
+                        class="inputLabel inputLabelUnfocused"
+                        for="IncomingRequestEmoji">
+                        Emoji
+                    </label>
+
+                    <input
+                        id="IncomingRequestEmoji"
+                        type="text"
+                        is="emby-input" />
+
+                </div>
+
+
+                <div class="inputContainer">
+
+                    <label
+                        class="inputLabel inputLabelUnfocused"
+                        for="IncomingRequestTitle">
+                        Title
+                    </label>
+
+                    <input
+                        id="IncomingRequestTitle"
+                        type="text"
+                        is="emby-input" />
+
+                </div>
+
+
+                <div class="inputContainer seerr-message-container">
+
+                    <label
+                        class="inputLabel inputLabelUnfocused"
+                        for="IncomingRequestMessage">
+                        Message
+                    </label>
+
+                    <textarea
+                        id="IncomingRequestMessage"
+                        class="seerr-message-box"
+                        rows="3"></textarea>
+
+                    <div class="seerr-help">
+                        Example:
+                        {user} requested <strong>{title}</strong>
                     </div>
 
                 </div>
 
-                <hr class="seerr-divider" />
 
-                <!-- NEW REQUESTS -->
-
-                <div class="seerr-section">
-
-                    <div class="sectionTitleContainer seerr-section-header">
-                        <h2 class="sectionTitle">
-                            New Requests
-                        </h2>
-                    </div>
-
-                    <div class="checkboxContainer checkboxContainer-withDescription">
-
-                        <label class="emby-checkbox-label">
-                            <input
-                                id="IncomingRequestEnabled"
-                                type="checkbox"
-                                is="emby-checkbox" />
-
-                            <span>
-                                Enable notifications for new requests
-                            </span>
-                        </label>
-
-                        <div class="fieldDescription">
-                            Sends a Discord notification when a new Seerr request is created.
-                        </div>
-
-                    </div>
-
-                    <div class="inputContainer">
-
-                        <label
-                            class="inputLabel inputLabelUnfocused"
-                            for="IncomingRequestWebhook">
-
-                            Discord webhook
-                        </label>
-
-                        <input
-                            id="IncomingRequestWebhook"
-                            type="url"
-                            is="emby-input"
-                            autocomplete="off"
-                            placeholder="https://discord.com/api/webhooks/..." />
-
-                        <div class="fieldDescription">
-                            Discord webhook that receives new Seerr request notifications.
-                        </div>
-
-                    </div>
-
-                    <div class="inputContainer">
-
-                        <label
-                            class="inputLabel inputLabelUnfocused"
-                            for="IncomingRequestEmoji">
-
-                            Emoji
-                        </label>
-
-                        <input
-                            id="IncomingRequestEmoji"
-                            type="text"
-                            is="emby-input"
-                            placeholder="🎬" />
-
-                    </div>
-
-                    <div class="inputContainer">
-
-                        <label
-                            class="inputLabel inputLabelUnfocused"
-                            for="IncomingRequestTitle">
-
-                            Title
-                        </label>
-
-                        <input
-                            id="IncomingRequestTitle"
-                            type="text"
-                            is="emby-input" />
-
-                    </div>
-
-                    <div class="inputContainer">
-
-                        <label
-                            class="inputLabel inputLabelUnfocused"
-                            for="IncomingRequestMessage">
-
-                            Message
-                        </label>
-
-                        <textarea
-                            id="IncomingRequestMessage"
-                            is="emby-input"
-                            class="seerr-message-box"
-                            rows="6"></textarea>
-
-                        <div class="fieldDescription seerr-message-description">
-                            Available placeholders:
-                        </div>
-
-                        <div class="fieldDescription seerr-placeholder-list">
-                            {user}, {mention}, {discordUserId}, {title},
-                            {mediaType}, {mediaStatus}, {requestId},
-                            {jellyfinUserId}, {jellyfinMediaId}
-                        </div>
-
-                    </div>
+                <div class="seerr-buttons">
 
                     <button
                         id="TestIncoming"
                         type="button"
                         is="emby-button"
-                        class="raised button-submit block emby-button seerr-button-spacing">
+                        class="raised button-submit block emby-button">
 
                         Test Incoming Webhook
+
                     </button>
 
                 </div>
 
-                <hr class="seerr-divider" />
+            </div>
 
-                <!-- AVAILABLE REQUESTS -->
 
-                <div class="seerr-section">
 
-                    <div class="sectionTitleContainer seerr-section-header">
-                        <h2 class="sectionTitle">
-                            Available Requests
-                        </h2>
+            <!-- ========================== -->
+            <!-- AVAILABLE REQUESTS -->
+            <!-- ========================== -->
+
+            <div class="seerr-section">
+
+                <h2>Available Requests</h2>
+
+                <label class="emby-checkbox-label">
+                    <input
+                        id="AvailableRequestEnabled"
+                        type="checkbox"
+                        is="emby-checkbox" />
+
+                    <span>Enable available request notifications</span>
+                </label>
+
+
+                <div class="inputContainer">
+
+                    <label
+                        class="inputLabel inputLabelUnfocused"
+                        for="AvailableRequestWebhook">
+                        Discord Webhook URL
+                    </label>
+
+                    <input
+                        id="AvailableRequestWebhook"
+                        type="url"
+                        is="emby-input" />
+
+                </div>
+
+
+                <div class="inputContainer">
+
+                    <label
+                        class="inputLabel inputLabelUnfocused"
+                        for="AvailableRequestEmoji">
+                        Emoji
+                    </label>
+
+                    <input
+                        id="AvailableRequestEmoji"
+                        type="text"
+                        is="emby-input" />
+
+                </div>
+
+
+                <div class="inputContainer">
+
+                    <label
+                        class="inputLabel inputLabelUnfocused"
+                        for="AvailableRequestTitle">
+                        Title
+                    </label>
+
+                    <input
+                        id="AvailableRequestTitle"
+                        type="text"
+                        is="emby-input" />
+
+                </div>
+
+
+                <div class="inputContainer seerr-message-container">
+
+                    <label
+                        class="inputLabel inputLabelUnfocused"
+                        for="AvailableRequestMessage">
+                        Message
+                    </label>
+
+                    <textarea
+                        id="AvailableRequestMessage"
+                        class="seerr-message-box"
+                        rows="3"></textarea>
+
+                    <div class="seerr-help">
+                        Example:
+                        {mention} your request <strong>{title}</strong> is now available!
                     </div>
 
-                    <div class="checkboxContainer checkboxContainer-withDescription">
+                </div>
 
-                        <label class="emby-checkbox-label">
-                            <input
-                                id="AvailableRequestEnabled"
-                                type="checkbox"
-                                is="emby-checkbox" />
 
-                            <span>
-                                Enable notifications for available requests
-                            </span>
-                        </label>
+                <label class="emby-checkbox-label">
 
-                        <div class="fieldDescription">
-                            Sends a Discord notification when requested media becomes available.
-                        </div>
+                    <input
+                        id="MentionDiscordUser"
+                        type="checkbox"
+                        is="emby-checkbox" />
 
-                    </div>
+                    <span>Mention Discord user</span>
 
-                    <div class="inputContainer">
+                </label>
 
-                        <label
-                            class="inputLabel inputLabelUnfocused"
-                            for="AvailableRequestWebhook">
 
-                            Discord webhook
-                        </label>
+                <label class="emby-checkbox-label">
 
-                        <input
-                            id="AvailableRequestWebhook"
-                            type="url"
-                            is="emby-input"
-                            autocomplete="off"
-                            placeholder="https://discord.com/api/webhooks/..." />
+                    <input
+                        id="SendAvailableWithoutMapping"
+                        type="checkbox"
+                        is="emby-checkbox" />
 
-                        <div class="fieldDescription">
-                            Discord webhook that receives availability notifications.
-                        </div>
+                    <span>
+                        Send notification when no Discord user mapping exists
+                    </span>
 
-                    </div>
+                </label>
 
-                    <div class="inputContainer">
 
-                        <label
-                            class="inputLabel inputLabelUnfocused"
-                            for="AvailableRequestEmoji">
-
-                            Emoji
-                        </label>
-
-                        <input
-                            id="AvailableRequestEmoji"
-                            type="text"
-                            is="emby-input"
-                            placeholder="✅" />
-
-                    </div>
-
-                    <div class="inputContainer">
-
-                        <label
-                            class="inputLabel inputLabelUnfocused"
-                            for="AvailableRequestTitle">
-
-                            Title
-                        </label>
-
-                        <input
-                            id="AvailableRequestTitle"
-                            type="text"
-                            is="emby-input" />
-
-                    </div>
-
-                    <div class="inputContainer">
-
-                        <label
-                            class="inputLabel inputLabelUnfocused"
-                            for="AvailableRequestMessage">
-
-                            Message
-                        </label>
-
-                        <textarea
-                            id="AvailableRequestMessage"
-                            is="emby-input"
-                            class="seerr-message-box"
-                            rows="6"></textarea>
-
-                        <div class="fieldDescription seerr-message-description">
-                            Example:
-                        </div>
-
-                        <div class="fieldDescription seerr-placeholder-list">
-                            {mention} your request **{title}** is now available!
-                        </div>
-
-                    </div>
-
-                    <div class="checkboxContainer checkboxContainer-withDescription">
-
-                        <label class="emby-checkbox-label">
-                            <input
-                                id="MentionDiscordUser"
-                                type="checkbox"
-                                is="emby-checkbox" />
-
-                            <span>
-                                Mention Discord user
-                            </span>
-                        </label>
-
-                        <div class="fieldDescription">
-                            Uses the linked Discord User ID to create a real Discord mention.
-                        </div>
-
-                    </div>
-
-                    <div class="checkboxContainer checkboxContainer-withDescription">
-
-                        <label class="emby-checkbox-label">
-                            <input
-                                id="SendAvailableWithoutMapping"
-                                type="checkbox"
-                                is="emby-checkbox" />
-
-                            <span>
-                                Send notification without Discord mapping
-                            </span>
-                        </label>
-
-                        <div class="fieldDescription">
-                            When disabled, notifications are skipped if no Discord User ID is linked.
-                        </div>
-
-                    </div>
+                <div class="seerr-buttons">
 
                     <button
                         id="TestAvailable"
                         type="button"
                         is="emby-button"
-                        class="raised button-submit block emby-button seerr-button-spacing">
+                        class="raised button-submit block emby-button">
 
                         Test Available Webhook
+
                     </button>
 
                 </div>
 
-                <hr class="seerr-divider" />
+            </div>
 
-                <!-- DISCORD DISPLAY -->
 
-                <div class="seerr-section">
 
-                    <div class="sectionTitleContainer seerr-section-header">
-                        <h2 class="sectionTitle">
-                            Discord Display
-                        </h2>
-                    </div>
+            <!-- ========================== -->
+            <!-- DISCORD DISPLAY -->
+            <!-- ========================== -->
 
-                    <div class="checkboxContainer checkboxContainer-withDescription">
+            <div class="seerr-section">
 
-                        <label class="emby-checkbox-label">
-                            <input
-                                id="UseEmbeds"
-                                type="checkbox"
-                                is="emby-checkbox" />
+                <h2>Discord Display</h2>
 
-                            <span>
-                                Use Discord embeds
-                            </span>
-                        </label>
 
-                    </div>
+                <label class="emby-checkbox-label">
 
-                    <div class="checkboxContainer checkboxContainer-withDescription">
+                    <input
+                        id="UseEmbeds"
+                        type="checkbox"
+                        is="emby-checkbox" />
 
-                        <label class="emby-checkbox-label">
-                            <input
-                                id="ShowPoster"
-                                type="checkbox"
-                                is="emby-checkbox" />
+                    <span>Use Discord embeds</span>
 
-                            <span>
-                                Show poster
-                            </span>
-                        </label>
+                </label>
 
-                    </div>
 
-                    <div class="checkboxContainer checkboxContainer-withDescription">
+                <label class="emby-checkbox-label">
 
-                        <label class="emby-checkbox-label">
-                            <input
-                                id="ShowMediaType"
-                                type="checkbox"
-                                is="emby-checkbox" />
+                    <input
+                        id="ShowPoster"
+                        type="checkbox"
+                        is="emby-checkbox" />
 
-                            <span>
-                                Show media type
-                            </span>
-                        </label>
+                    <span>Show media poster</span>
 
-                    </div>
+                </label>
+
+
+                <label class="emby-checkbox-label">
+
+                    <input
+                        id="ShowMediaType"
+                        type="checkbox"
+                        is="emby-checkbox" />
+
+                    <span>Show media type</span>
+
+                </label>
+
+            </div>
+
+
+
+            <!-- ========================== -->
+            <!-- USER MAPPINGS -->
+            <!-- ========================== -->
+
+            <div class="seerr-section">
+
+                <h2>Jellyfin ↔ Discord Users</h2>
+
+                <div class="seerr-help">
+
+                    Jellyfin users are not imported automatically.
+
+                    Click <strong>Import Users</strong> to add the
+                    current Jellyfin users to this plugin.
 
                 </div>
 
-                <hr class="seerr-divider" />
 
-                <!-- USER MAPPINGS -->
-
-                <div class="seerr-section">
-
-                    <div class="sectionTitleContainer seerr-section-header">
-                        <h2 class="sectionTitle">
-                            Jellyfin ↔ Discord Users
-                        </h2>
-                    </div>
-
-                    <p class="seerr-import-info">
-                        Import Jellyfin users and link them to their Discord accounts.
-                        A Discord User ID is required for real Discord mentions.
-                    </p>
+                <div class="seerr-buttons">
 
                     <button
                         id="ImportUsers"
                         type="button"
                         is="emby-button"
-                        class="raised block emby-button">
+                        class="raised button-submit block emby-button">
 
                         Import Users
+
                     </button>
-
-                    <div
-                        id="UsersEmptyState"
-                        class="seerr-empty-state">
-
-                        No users have been imported yet.
-                        Click <strong>Import Users</strong> to load Jellyfin users.
-                    </div>
-
-                    <div
-                        id="UserMappingsContainer"
-                        class="seerr-hidden">
-                    </div>
 
                 </div>
 
-                <hr class="seerr-divider" />
 
-                <button
-                    id="Save"
-                    type="submit"
-                    is="emby-button"
-                    class="raised button-submit block emby-button">
+                <div
+                    id="UsersEmptyState"
+                    class="seerr-empty-state">
 
-                    Save
-                </button>
+                    No Jellyfin users have been imported yet.
 
-            </form>
+                </div>
 
-        </div>
+
+                <div
+                    id="UserMappingsContainer"
+                    class="seerr-user-list"
+                    style="display:none;">
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ========================== -->
+            <!-- SAVE -->
+            <!-- ========================== -->
+
+            <button
+                type="submit"
+                is="emby-button"
+                class="raised button-submit block emby-button seerr-save">
+
+                Save
+
+            </button>
+
+
+        </form>
+
     </div>
 
-    <script type="text/javascript">
 
-        var SeerrDiscordConfig = {
-            pluginUniqueId:
-                "D9D31ED4-17B9-44AC-B7C6-3AC3D0DD6145"
-        };
 
-        function setValue(id, value) {
-            var element =
-                document.getElementById(id);
+<script type="text/javascript">
 
-            if (!element) {
+    (function () {
+
+        const pluginId =
+            "D9D31ED4-17B9-44AC-B7C6-3AC3D0DD6145";
+
+
+        const page =
+            document.querySelector(
+                "#SeerrDiscordConfigPage"
+            );
+
+
+        const form =
+            page.querySelector(
+                "#SeerrDiscordConfigForm"
+            );
+
+
+        const mappingsContainer =
+            page.querySelector(
+                "#UserMappingsContainer"
+            );
+
+
+        const emptyState =
+            page.querySelector(
+                "#UsersEmptyState"
+            );
+
+
+        let currentMappings = [];
+
+
+        function showToast(message) {
+
+            if (window.Dashboard &&
+                Dashboard.alert) {
+
+                Dashboard.alert(message);
+
                 return;
             }
 
-            element.value =
-                value ?? "";
+            alert(message);
         }
 
-        function setChecked(id, value) {
-            var element =
-                document.getElementById(id);
 
-            if (!element) {
+
+        function renderMappings(mappings) {
+
+            currentMappings =
+                mappings || [];
+
+
+            mappingsContainer.innerHTML =
+                "";
+
+
+            if (currentMappings.length === 0) {
+
+                mappingsContainer.style.display =
+                    "none";
+
+                emptyState.style.display =
+                    "block";
+
                 return;
             }
 
-            element.checked =
-                value === true;
-        }
 
-        function escapeHtml(value) {
-            return String(value)
-                .replaceAll("&", "&amp;")
-                .replaceAll("<", "&lt;")
-                .replaceAll(">", "&gt;")
-                .replaceAll("\"", "&quot;")
-                .replaceAll("'", "&#039;");
-        }
+            emptyState.style.display =
+                "none";
 
-        function escapeAttribute(value) {
-            return escapeHtml(value);
-        }
+            mappingsContainer.style.display =
+                "flex";
 
-        function showUserMappings() {
 
-            document
-                .getElementById("UsersEmptyState")
-                .classList.add("seerr-hidden");
+            currentMappings.forEach(
+                function (mapping, index) {
 
-            document
-                .getElementById("UserMappingsContainer")
-                .classList.remove("seerr-hidden");
-        }
-
-        function hideUserMappings() {
-
-            document
-                .getElementById("UsersEmptyState")
-                .classList.remove("seerr-hidden");
-
-            document
-                .getElementById("UserMappingsContainer")
-                .classList.add("seerr-hidden");
-        }
-
-        function renderUserMappings(mappings) {
-
-            var container =
-                document.getElementById(
-                    "UserMappingsContainer"
-                );
-
-            container.innerHTML = "";
-
-            if (!mappings ||
-                mappings.length === 0) {
-
-                hideUserMappings();
-                return;
-            }
-
-            showUserMappings();
-
-            var sortedMappings =
-                [...mappings].sort(
-                    function (a, b) {
-
-                        return (
-                            a.JellyfinUsername || ""
-                        ).localeCompare(
-                            b.JellyfinUsername || ""
+                    const card =
+                        document.createElement(
+                            "div"
                         );
-                    }
-                );
 
-            sortedMappings.forEach(
-                function (mapping) {
 
-                    var row =
-                        document.createElement("div");
-
-                    row.className =
+                    card.className =
                         "seerr-user-card";
 
-                    row.dataset.userId =
-                        mapping.JellyfinUserId;
 
-                    row.innerHTML = `
+                    const username =
+                        document.createElement(
+                            "div"
+                        );
 
-                        <h3>
-                            ${escapeHtml(
-                                mapping.JellyfinUsername ||
-                                "Unknown user"
-                            )}
-                        </h3>
 
-                        <div class="inputContainer">
+                    username.className =
+                        "seerr-user-title";
 
-                            <label
-                                class="inputLabel inputLabelUnfocused">
 
-                                Discord User ID
-                            </label>
+                    username.textContent =
+                        mapping.JellyfinUsername ||
+                        mapping.jellyfinUsername ||
+                        "Unknown user";
 
-                            <input
-                                type="text"
-                                class="discordUserIdInput"
-                                is="emby-input"
-                                value="${escapeAttribute(
-                                    mapping.DiscordUserId || ""
-                                )}"
-                                placeholder="Example: 123456789012345678" />
 
-                            <div class="fieldDescription">
-                                Enable Discord Developer Mode,
-                                right-click the user and select
-                                "Copy User ID".
-                            </div>
+                    const idContainer =
+                        document.createElement(
+                            "div"
+                        );
 
-                        </div>
 
-                        <div
-                            class="checkboxContainer checkboxContainer-withDescription">
+                    idContainer.className =
+                        "inputContainer";
 
-                            <label class="emby-checkbox-label">
 
-                                <input
-                                    type="checkbox"
-                                    class="mappingEnabledInput"
-                                    is="emby-checkbox"
-                                    ${
-                                        mapping.Enabled !== false
-                                            ? "checked"
-                                            : ""
-                                    } />
+                    const idLabel =
+                        document.createElement(
+                            "label"
+                        );
 
-                                <span>
-                                    Enable mapping
-                                </span>
 
-                            </label>
+                    idLabel.className =
+                        "inputLabel inputLabelUnfocused";
 
-                        </div>
 
-                        <div class="seerr-user-id">
+                    idLabel.textContent =
+                        "Discord User ID";
 
-                            Jellyfin User ID:
-                            ${escapeHtml(
-                                mapping.JellyfinUserId || ""
-                            )}
 
-                        </div>
-                    `;
+                    const idInput =
+                        document.createElement(
+                            "input"
+                        );
 
-                    container.appendChild(row);
+
+                    idInput.type =
+                        "text";
+
+
+                    idInput.className =
+                        "emby-input";
+
+
+                    idInput.style.width =
+                        "100%";
+
+
+                    idInput.value =
+                        mapping.DiscordUserId ||
+                        mapping.discordUserId ||
+                        "";
+
+
+                    idInput.dataset.mappingIndex =
+                        index;
+
+
+                    const enabledLabel =
+                        document.createElement(
+                            "label"
+                        );
+
+
+                    enabledLabel.className =
+                        "emby-checkbox-label";
+
+
+                    const enabledInput =
+                        document.createElement(
+                            "input"
+                        );
+
+
+                    enabledInput.type =
+                        "checkbox";
+
+
+                    enabledInput.checked =
+                        mapping.Enabled ??
+                        mapping.enabled ??
+                        true;
+
+
+                    enabledInput.dataset.mappingIndex =
+                        index;
+
+
+                    enabledInput.className =
+                        "mappingEnabled";
+
+
+                    enabledLabel.appendChild(
+                        enabledInput
+                    );
+
+
+                    enabledLabel.appendChild(
+                        document.createTextNode(
+                            " Enable Discord notifications for this user"
+                        )
+                    );
+
+
+                    idContainer.appendChild(
+                        idLabel
+                    );
+
+
+                    idContainer.appendChild(
+                        idInput
+                    );
+
+
+                    card.appendChild(
+                        username
+                    );
+
+
+                    card.appendChild(
+                        idContainer
+                    );
+
+
+                    card.appendChild(
+                        enabledLabel
+                    );
+
+
+                    mappingsContainer.appendChild(
+                        card
+                    );
+
                 }
             );
+
         }
+
+
 
         function loadConfiguration() {
 
             Dashboard.showLoadingMsg();
 
-            ApiClient
-                .getPluginConfiguration(
-                    SeerrDiscordConfig.pluginUniqueId
-                )
-                .then(function (config) {
 
-                    setChecked(
-                        "PluginEnabled",
-                        config.PluginEnabled
-                    );
-
-                    setValue(
-                        "SeerrWebhookToken",
-                        config.SeerrWebhookToken
-                    );
-
-                    setChecked(
-                        "IncomingRequestEnabled",
-                        config.IncomingRequestEnabled
-                    );
-
-                    setValue(
-                        "IncomingRequestWebhook",
-                        config.IncomingRequestWebhook
-                    );
-
-                    setValue(
-                        "IncomingRequestEmoji",
-                        config.IncomingRequestEmoji
-                    );
-
-                    setValue(
-                        "IncomingRequestTitle",
-                        config.IncomingRequestTitle
-                    );
-
-                    setValue(
-                        "IncomingRequestMessage",
-                        config.IncomingRequestMessage
-                    );
-
-                    setChecked(
-                        "AvailableRequestEnabled",
-                        config.AvailableRequestEnabled
-                    );
-
-                    setValue(
-                        "AvailableRequestWebhook",
-                        config.AvailableRequestWebhook
-                    );
-
-                    setValue(
-                        "AvailableRequestEmoji",
-                        config.AvailableRequestEmoji
-                    );
-
-                    setValue(
-                        "AvailableRequestTitle",
-                        config.AvailableRequestTitle
-                    );
-
-                    setValue(
-                        "AvailableRequestMessage",
-                        config.AvailableRequestMessage
-                    );
-
-                    setChecked(
-                        "MentionDiscordUser",
-                        config.MentionDiscordUser
-                    );
-
-                    setChecked(
-                        "SendAvailableWithoutMapping",
-                        config.SendAvailableWithoutMapping
-                    );
-
-                    setChecked(
-                        "UseEmbeds",
-                        config.UseEmbeds
-                    );
-
-                    setChecked(
-                        "ShowPoster",
-                        config.ShowPoster
-                    );
-
-                    setChecked(
-                        "ShowMediaType",
-                        config.ShowMediaType
-                    );
-
-                    if (config.UserMappings &&
-                        config.UserMappings.length > 0) {
-
-                        renderUserMappings(
-                            config.UserMappings
-                        );
-                    } else {
-
-                        hideUserMappings();
-                    }
-
-                    Dashboard.hideLoadingMsg();
-                });
-        }
-
-        function collectUserMappings(config) {
-
-            var existingMappings =
-                config.UserMappings || [];
-
-            var mappingsById = {};
-
-            existingMappings.forEach(
-                function (mapping) {
-
-                    mappingsById[
-                        mapping.JellyfinUserId
-                    ] = mapping;
-                }
-            );
-
-            document
-                .querySelectorAll(
-                    "#UserMappingsContainer .seerr-user-card"
-                )
-                .forEach(function (row) {
-
-                    var userId =
-                        row.dataset.userId;
-
-                    if (!userId) {
-                        return;
-                    }
-
-                    var existing =
-                        mappingsById[userId];
-
-                    if (!existing) {
-                        return;
-                    }
-
-                    var discordInput =
-                        row.querySelector(
-                            ".discordUserIdInput"
-                        );
-
-                    var enabledInput =
-                        row.querySelector(
-                            ".mappingEnabledInput"
-                        );
-
-                    existing.DiscordUserId =
-                        discordInput
-                            ? discordInput.value.trim()
-                            : "";
-
-                    existing.Enabled =
-                        enabledInput
-                            ? enabledInput.checked
-                            : true;
-                });
-
-            return existingMappings;
-        }
-
-        function saveConfiguration(event) {
-
-            event.preventDefault();
-
-            Dashboard.showLoadingMsg();
-
-            ApiClient
-                .getPluginConfiguration(
-                    SeerrDiscordConfig.pluginUniqueId
-                )
-                .then(function (config) {
-
-                    config.PluginEnabled =
-                        document.getElementById(
-                            "PluginEnabled"
-                        ).checked;
-
-                    config.SeerrWebhookToken =
-                        document.getElementById(
-                            "SeerrWebhookToken"
-                        ).value.trim();
-
-                    config.IncomingRequestEnabled =
-                        document.getElementById(
-                            "IncomingRequestEnabled"
-                        ).checked;
-
-                    config.IncomingRequestWebhook =
-                        document.getElementById(
-                            "IncomingRequestWebhook"
-                        ).value.trim();
-
-                    config.IncomingRequestEmoji =
-                        document.getElementById(
-                            "IncomingRequestEmoji"
-                        ).value.trim();
-
-                    config.IncomingRequestTitle =
-                        document.getElementById(
-                            "IncomingRequestTitle"
-                        ).value.trim();
-
-                    config.IncomingRequestMessage =
-                        document.getElementById(
-                            "IncomingRequestMessage"
-                        ).value;
-
-                    config.AvailableRequestEnabled =
-                        document.getElementById(
-                            "AvailableRequestEnabled"
-                        ).checked;
-
-                    config.AvailableRequestWebhook =
-                        document.getElementById(
-                            "AvailableRequestWebhook"
-                        ).value.trim();
-
-                    config.AvailableRequestEmoji =
-                        document.getElementById(
-                            "AvailableRequestEmoji"
-                        ).value.trim();
-
-                    config.AvailableRequestTitle =
-                        document.getElementById(
-                            "AvailableRequestTitle"
-                        ).value.trim();
-
-                    config.AvailableRequestMessage =
-                        document.getElementById(
-                            "AvailableRequestMessage"
-                        ).value;
-
-                    config.MentionDiscordUser =
-                        document.getElementById(
-                            "MentionDiscordUser"
-                        ).checked;
-
-                    config.SendAvailableWithoutMapping =
-                        document.getElementById(
-                            "SendAvailableWithoutMapping"
-                        ).checked;
-
-                    config.UseEmbeds =
-                        document.getElementById(
-                            "UseEmbeds"
-                        ).checked;
-
-                    config.ShowPoster =
-                        document.getElementById(
-                            "ShowPoster"
-                        ).checked;
-
-                    config.ShowMediaType =
-                        document.getElementById(
-                            "ShowMediaType"
-                        ).checked;
-
-                    config.UserMappings =
-                        collectUserMappings(config);
-
-                    return ApiClient
-                        .updatePluginConfiguration(
-                            SeerrDiscordConfig.pluginUniqueId,
-                            config
-                        );
-                })
-                .then(function (result) {
-
-                    Dashboard
-                        .processPluginConfigurationUpdateResult(
-                            result
-                        );
-
-                    loadConfiguration();
-                })
-                .catch(function (error) {
-
-                    console.error(
-                        "Failed to save Seerr Discord configuration:",
-                        error
-                    );
-
-                    Dashboard.hideLoadingMsg();
-
-                    alert(
-                        "Failed to save the configuration. Check the Jellyfin browser console or server log for details."
-                    );
-                });
-        }
-
-        function importUsers() {
-
-            Dashboard.showLoadingMsg();
-
-            ApiClient.ajax({
-                type: "POST",
-                url: ApiClient.getUrl(
-                    "Dreamstreaming/SeerrDiscord/SyncUsers"
-                )
-            })
-            .then(function () {
-
-                return ApiClient
-                    .getPluginConfiguration(
-                        SeerrDiscordConfig.pluginUniqueId
-                    );
-            })
+            ApiClient.getPluginConfiguration(
+                pluginId
+            )
             .then(function (config) {
 
-                renderUserMappings(
+                page.querySelector(
+                    "#PluginEnabled"
+                ).checked =
+                    config.PluginEnabled;
+
+
+                page.querySelector(
+                    "#SeerrWebhookToken"
+                ).value =
+                    config.SeerrWebhookToken || "";
+
+
+                page.querySelector(
+                    "#IncomingRequestEnabled"
+                ).checked =
+                    config.IncomingRequestEnabled;
+
+
+                page.querySelector(
+                    "#IncomingRequestWebhook"
+                ).value =
+                    config.IncomingRequestWebhook || "";
+
+
+                page.querySelector(
+                    "#IncomingRequestEmoji"
+                ).value =
+                    config.IncomingRequestEmoji || "";
+
+
+                page.querySelector(
+                    "#IncomingRequestTitle"
+                ).value =
+                    config.IncomingRequestTitle || "";
+
+
+                page.querySelector(
+                    "#IncomingRequestMessage"
+                ).value =
+                    config.IncomingRequestMessage || "";
+
+
+                page.querySelector(
+                    "#AvailableRequestEnabled"
+                ).checked =
+                    config.AvailableRequestEnabled;
+
+
+                page.querySelector(
+                    "#AvailableRequestWebhook"
+                ).value =
+                    config.AvailableRequestWebhook || "";
+
+
+                page.querySelector(
+                    "#AvailableRequestEmoji"
+                ).value =
+                    config.AvailableRequestEmoji || "";
+
+
+                page.querySelector(
+                    "#AvailableRequestTitle"
+                ).value =
+                    config.AvailableRequestTitle || "";
+
+
+                page.querySelector(
+                    "#AvailableRequestMessage"
+                ).value =
+                    config.AvailableRequestMessage || "";
+
+
+                page.querySelector(
+                    "#MentionDiscordUser"
+                ).checked =
+                    config.MentionDiscordUser;
+
+
+                page.querySelector(
+                    "#SendAvailableWithoutMapping"
+                ).checked =
+                    config.SendAvailableWithoutMapping;
+
+
+                page.querySelector(
+                    "#UseEmbeds"
+                ).checked =
+                    config.UseEmbeds;
+
+
+                page.querySelector(
+                    "#ShowPoster"
+                ).checked =
+                    config.ShowPoster;
+
+
+                page.querySelector(
+                    "#ShowMediaType"
+                ).checked =
+                    config.ShowMediaType;
+
+
+                renderMappings(
                     config.UserMappings || []
                 );
 
+
                 Dashboard.hideLoadingMsg();
 
-                alert(
-                    "Jellyfin users imported successfully."
+            });
+
+        }
+
+
+
+        function saveConfiguration() {
+
+            Dashboard.showLoadingMsg();
+
+
+            ApiClient.getPluginConfiguration(
+                pluginId
+            )
+            .then(function (config) {
+
+                config.PluginEnabled =
+                    page.querySelector(
+                        "#PluginEnabled"
+                    ).checked;
+
+
+                config.SeerrWebhookToken =
+                    page.querySelector(
+                        "#SeerrWebhookToken"
+                    ).value;
+
+
+                config.IncomingRequestEnabled =
+                    page.querySelector(
+                        "#IncomingRequestEnabled"
+                    ).checked;
+
+
+                config.IncomingRequestWebhook =
+                    page.querySelector(
+                        "#IncomingRequestWebhook"
+                    ).value;
+
+
+                config.IncomingRequestEmoji =
+                    page.querySelector(
+                        "#IncomingRequestEmoji"
+                    ).value;
+
+
+                config.IncomingRequestTitle =
+                    page.querySelector(
+                        "#IncomingRequestTitle"
+                    ).value;
+
+
+                config.IncomingRequestMessage =
+                    page.querySelector(
+                        "#IncomingRequestMessage"
+                    ).value;
+
+
+                config.AvailableRequestEnabled =
+                    page.querySelector(
+                        "#AvailableRequestEnabled"
+                    ).checked;
+
+
+                config.AvailableRequestWebhook =
+                    page.querySelector(
+                        "#AvailableRequestWebhook"
+                    ).value;
+
+
+                config.AvailableRequestEmoji =
+                    page.querySelector(
+                        "#AvailableRequestEmoji"
+                    ).value;
+
+
+                config.AvailableRequestTitle =
+                    page.querySelector(
+                        "#AvailableRequestTitle"
+                    ).value;
+
+
+                config.AvailableRequestMessage =
+                    page.querySelector(
+                        "#AvailableRequestMessage"
+                    ).value;
+
+
+                config.MentionDiscordUser =
+                    page.querySelector(
+                        "#MentionDiscordUser"
+                    ).checked;
+
+
+                config.SendAvailableWithoutMapping =
+                    page.querySelector(
+                        "#SendAvailableWithoutMapping"
+                    ).checked;
+
+
+                config.UseEmbeds =
+                    page.querySelector(
+                        "#UseEmbeds"
+                    ).checked;
+
+
+                config.ShowPoster =
+                    page.querySelector(
+                        "#ShowPoster"
+                    ).checked;
+
+
+                config.ShowMediaType =
+                    page.querySelector(
+                        "#ShowMediaType"
+                    ).checked;
+
+
+
+                const userCards =
+                    mappingsContainer.querySelectorAll(
+                        ".seerr-user-card"
+                    );
+
+
+                userCards.forEach(
+                    function (card, index) {
+
+                        if (!currentMappings[index]) {
+                            return;
+                        }
+
+
+                        const discordInput =
+                            card.querySelector(
+                                "input[type='text']"
+                            );
+
+
+                        const enabledInput =
+                            card.querySelector(
+                                ".mappingEnabled"
+                            );
+
+
+                        currentMappings[index].DiscordUserId =
+                            discordInput
+                                ? discordInput.value.trim()
+                                : "";
+
+
+                        currentMappings[index].Enabled =
+                            enabledInput
+                                ? enabledInput.checked
+                                : true;
+
+                    }
                 );
-            })
-            .catch(function (error) {
+
+
+                config.UserMappings =
+                    currentMappings;
+
+
+                ApiClient.updatePluginConfiguration(
+                    pluginId,
+                    config
+                )
+                .then(
+                    Dashboard.processPluginConfigurationUpdateResult
+                );
+
+            });
+
+        }
+
+
+
+        async function importUsers() {
+
+            Dashboard.showLoadingMsg();
+
+
+            try {
+
+                const response =
+                    await ApiClient.ajax({
+
+                        type: "POST",
+
+                        url:
+                            ApiClient.getUrl(
+                                "Dreamstreaming/SeerrDiscord/ImportUsers"
+                            )
+
+                    });
+
+
+                loadConfiguration();
+
+
+                if (response &&
+                    response.message) {
+
+                    showToast(
+                        response.message
+                    );
+                }
+
+            }
+            catch (error) {
+
+                Dashboard.hideLoadingMsg();
+
 
                 console.error(
                     "Failed to import Jellyfin users:",
                     error
                 );
 
-                Dashboard.hideLoadingMsg();
 
-                alert(
+                showToast(
                     "Failed to import Jellyfin users."
                 );
-            });
+            }
+
         }
 
-        function testIncoming() {
+
+
+        async function testIncoming() {
 
             Dashboard.showLoadingMsg();
 
-            ApiClient.ajax({
-                type: "POST",
-                url: ApiClient.getUrl(
-                    "Dreamstreaming/SeerrDiscord/TestIncoming"
-                )
-            })
-            .then(function () {
+
+            try {
+
+                await ApiClient.ajax({
+
+                    type: "POST",
+
+                    url:
+                        ApiClient.getUrl(
+                            "Dreamstreaming/SeerrDiscord/TestIncoming"
+                        )
+
+                });
+
 
                 Dashboard.hideLoadingMsg();
 
-                alert(
-                    "Incoming webhook test message sent."
+
+                showToast(
+                    "Incoming request test sent."
                 );
-            })
-            .catch(function (error) {
+
+            }
+            catch (error) {
+
+                Dashboard.hideLoadingMsg();
+
 
                 console.error(
-                    "Incoming webhook test failed:",
                     error
                 );
 
-                Dashboard.hideLoadingMsg();
 
-                alert(
-                    "Incoming webhook test failed. Make sure your settings have been saved first."
+                showToast(
+                    "Failed to send incoming request test."
                 );
-            });
+            }
+
         }
 
-        function testAvailable() {
+
+
+        async function testAvailable() {
 
             Dashboard.showLoadingMsg();
 
-            ApiClient.ajax({
-                type: "POST",
-                url: ApiClient.getUrl(
-                    "Dreamstreaming/SeerrDiscord/TestAvailable"
-                )
-            })
-            .then(function () {
+
+            try {
+
+                await ApiClient.ajax({
+
+                    type: "POST",
+
+                    url:
+                        ApiClient.getUrl(
+                            "Dreamstreaming/SeerrDiscord/TestAvailable"
+                        )
+
+                });
+
 
                 Dashboard.hideLoadingMsg();
 
-                alert(
-                    "Available webhook test message sent."
+
+                showToast(
+                    "Available request test sent."
                 );
-            })
-            .catch(function (error) {
+
+            }
+            catch (error) {
+
+                Dashboard.hideLoadingMsg();
+
 
                 console.error(
-                    "Available webhook test failed:",
                     error
                 );
 
-                Dashboard.hideLoadingMsg();
 
-                alert(
-                    "Available webhook test failed. Make sure your settings have been saved first."
+                showToast(
+                    "Failed to send available request test."
                 );
-            });
+            }
+
         }
 
-        document
-            .getElementById(
-                "SeerrDiscordConfigPage"
-            )
-            .addEventListener(
-                "pageshow",
-                loadConfiguration
-            );
 
-        document
-            .getElementById(
-                "SeerrDiscordConfigForm"
-            )
-            .addEventListener(
-                "submit",
-                saveConfiguration
-            );
 
-        document
-            .getElementById(
-                "ImportUsers"
-            )
-            .addEventListener(
-                "click",
-                importUsers
-            );
+        page.addEventListener(
+            "pageshow",
+            loadConfiguration
+        );
 
-        document
-            .getElementById(
-                "TestIncoming"
-            )
-            .addEventListener(
-                "click",
-                testIncoming
-            );
 
-        document
-            .getElementById(
-                "TestAvailable"
-            )
-            .addEventListener(
-                "click",
-                testAvailable
-            );
+        form.addEventListener(
+            "submit",
+            function (event) {
 
-    </script>
+                event.preventDefault();
+
+                saveConfiguration();
+
+                return false;
+            }
+        );
+
+
+        page.querySelector(
+            "#ImportUsers"
+        ).addEventListener(
+            "click",
+            importUsers
+        );
+
+
+        page.querySelector(
+            "#TestIncoming"
+        ).addEventListener(
+            "click",
+            testIncoming
+        );
+
+
+        page.querySelector(
+            "#TestAvailable"
+        ).addEventListener(
+            "click",
+            testAvailable
+        );
+
+
+    })();
+
+</script>
 
 </div>
 
