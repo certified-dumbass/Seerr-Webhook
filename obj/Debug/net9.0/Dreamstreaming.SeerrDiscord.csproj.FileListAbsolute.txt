@@ -1,0 +1,14 @@
+C:\Users\Emiel\Documents\Jellyfin Plugins\Seerr Webhook\obj\Debug\net9.0\Dreamstreaming.SeerrDiscord.csproj.AssemblyReference.cache
+C:\Users\Emiel\Documents\Jellyfin Plugins\Seerr Webhook\obj\Debug\net9.0\Dreamstreaming.SeerrDiscord.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Emiel\Documents\Jellyfin Plugins\Seerr Webhook\obj\Debug\net9.0\Dreamstreaming.SeerrDiscord.AssemblyInfoInputs.cache
+C:\Users\Emiel\Documents\Jellyfin Plugins\Seerr Webhook\obj\Debug\net9.0\Dreamstreaming.SeerrDiscord.AssemblyInfo.cs
+C:\Users\Emiel\Documents\Jellyfin Plugins\Seerr Webhook\obj\Debug\net9.0\Dreamstreaming.SeerrDiscord.csproj.CoreCompileInputs.cache
+C:\Users\Emiel\Documents\Jellyfin Plugins\Seerr Webhook\bin\Debug\net9.0\Dreamstreaming.SeerrDiscord.deps.json
+C:\Users\Emiel\Documents\Jellyfin Plugins\Seerr Webhook\bin\Debug\net9.0\Dreamstreaming.SeerrDiscord.dll
+C:\Users\Emiel\Documents\Jellyfin Plugins\Seerr Webhook\bin\Debug\net9.0\Dreamstreaming.SeerrDiscord.pdb
+C:\Users\Emiel\Documents\Jellyfin Plugins\Seerr Webhook\bin\Debug\net9.0\Dreamstreaming.SeerrDiscord.xml
+C:\Users\Emiel\Documents\Jellyfin Plugins\Seerr Webhook\obj\Debug\net9.0\Dreamstreaming.SeerrDiscord.dll
+C:\Users\Emiel\Documents\Jellyfin Plugins\Seerr Webhook\obj\Debug\net9.0\refint\Dreamstreaming.SeerrDiscord.dll
+C:\Users\Emiel\Documents\Jellyfin Plugins\Seerr Webhook\obj\Debug\net9.0\Dreamstreaming.SeerrDiscord.xml
+C:\Users\Emiel\Documents\Jellyfin Plugins\Seerr Webhook\obj\Debug\net9.0\Dreamstreaming.SeerrDiscord.pdb
+C:\Users\Emiel\Documents\Jellyfin Plugins\Seerr Webhook\obj\Debug\net9.0\ref\Dreamstreaming.SeerrDiscord.dll

@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Dreamstreaming.SeerrDiscord</name>
+    </assembly>
+    <members>
+        <member name="M:Dreamstreaming.SeerrDiscord.Controllers.SeerrWebhookController.SyncUsers">
+            <summary>
+            Synchronizes Jellyfin users with the plugin configuration.
+            </summary>
+            <returns>The synchronization result.</returns>
+        </member>
+        <member name="M:Dreamstreaming.SeerrDiscord.Controllers.SeerrWebhookController.GetUsers">
+            <summary>
+            Returns all Jellyfin users and their Discord mappings.
+            </summary>
+            <returns>The Jellyfin users.</returns>
+        </member>
+        <member name="M:Dreamstreaming.SeerrDiscord.Controllers.SeerrWebhookController.TestIncoming(System.Threading.CancellationToken)">
+            <summary>
+            Sends a test message to the incoming request Discord webhook.
+            </summary>
+            <param name="cancellationToken">
+            Cancellation token.
+            </param>
+            <returns>The test result.</returns>
+        </member>
+        <member name="M:Dreamstreaming.SeerrDiscord.Controllers.SeerrWebhookController.TestAvailable(System.Threading.CancellationToken)">
+            <summary>
+            Sends a test message to the available request Discord webhook.
+            </summary>
+            <param name="cancellationToken">
+            Cancellation token.
+            </param>
+            <returns>The test result.</returns>
+        </member>
+    </members>
+</doc>
