@@ -6,6 +6,9 @@
     "overview": "Send Seerr request notifications to Discord and map Jellyfin users to Discord accounts.",
     "owner": "Certified-dumbass",
     "category": "General",
+
+    "imageUrl": "https://raw.githubusercontent.com/certified-dumbass/Seerr-Webhook/main/profilepic.png",
+
     "versions": [
       {
         "version": "1.0.2",
