@@ -6,7 +6,11 @@
     <AssemblyName>Dreamstreaming.SeerrDiscord</AssemblyName>
     <RootNamespace>Dreamstreaming.SeerrDiscord</RootNamespace>
 
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <Version>1.0.1</Version>
+    <AssemblyVersion>1.0.1.0</AssemblyVersion>
+    <FileVersion>1.0.1.0</FileVersion>
+
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
 

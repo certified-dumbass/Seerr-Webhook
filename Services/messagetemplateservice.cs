@@ -14,18 +14,47 @@ public class MessageTemplateService
             return string.Empty;
         }
 
+        var requestedBy =
+            string.IsNullOrWhiteSpace(payload.RequestedBy)
+                ? "Unknown user"
+                : payload.RequestedBy.Trim();
+
+        var cleanDiscordUserId =
+            discordUserId?.Trim()
+            ?? string.Empty;
+
         var mention =
-            string.IsNullOrWhiteSpace(discordUserId)
-                ? payload.RequestedBy
-                : $"<@{discordUserId}>";
+            string.IsNullOrWhiteSpace(cleanDiscordUserId)
+                ? requestedBy
+                : $"<@{cleanDiscordUserId}>";
 
         var title =
             payload.GetDisplayTitle();
 
+        var mediaType =
+            payload.MediaType?.Trim()
+            ?? string.Empty;
+
+        var requestId =
+            payload.RequestId?.Trim()
+            ?? string.Empty;
+
+        var jellyfinUserId =
+            payload.JellyfinUserId?.Trim()
+            ?? string.Empty;
+
+        var mediaStatus =
+            payload.MediaStatus?.Trim()
+            ?? string.Empty;
+
+        var jellyfinMediaId =
+            payload.JellyfinMediaId?.Trim()
+            ?? string.Empty;
+
         return template
             .Replace(
                 "{user}",
-                payload.RequestedBy,
+                requestedBy,
                 StringComparison.OrdinalIgnoreCase)
             .Replace(
                 "{mention}",
@@ -33,7 +62,7 @@ public class MessageTemplateService
                 StringComparison.OrdinalIgnoreCase)
             .Replace(
                 "{discordUserId}",
-                discordUserId,
+                cleanDiscordUserId,
                 StringComparison.OrdinalIgnoreCase)
             .Replace(
                 "{title}",
@@ -41,23 +70,23 @@ public class MessageTemplateService
                 StringComparison.OrdinalIgnoreCase)
             .Replace(
                 "{mediaType}",
-                payload.MediaType,
+                mediaType,
                 StringComparison.OrdinalIgnoreCase)
             .Replace(
                 "{requestId}",
-                payload.RequestId,
+                requestId,
                 StringComparison.OrdinalIgnoreCase)
             .Replace(
                 "{jellyfinUserId}",
-                payload.JellyfinUserId,
+                jellyfinUserId,
                 StringComparison.OrdinalIgnoreCase)
             .Replace(
                 "{mediaStatus}",
-                payload.MediaStatus,
+                mediaStatus,
                 StringComparison.OrdinalIgnoreCase)
             .Replace(
                 "{jellyfinMediaId}",
-                payload.JellyfinMediaId,
+                jellyfinMediaId,
                 StringComparison.OrdinalIgnoreCase);
     }
 }

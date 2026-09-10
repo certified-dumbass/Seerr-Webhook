@@ -25,25 +25,55 @@ public class SeerrWebhookController : ControllerBase
     }
 
     /// <summary>
-    /// Synchronizes Jellyfin users with the plugin configuration.
+    /// Imports Jellyfin users into the plugin configuration.
+    /// Existing Discord mappings are preserved.
     /// </summary>
-    /// <returns>The synchronization result.</returns>
+    /// <returns>The import result.</returns>
+    [HttpPost("ImportUsers")]
     [HttpPost("SyncUsers")]
-    public ActionResult SyncUsers()
+    public ActionResult ImportUsers()
     {
-        var addedUsers = _userSyncService.SyncUsers();
-
-        return Ok(new
+        try
         {
-            success = true,
-            addedUsers
-        });
+            var addedUsers =
+                _userSyncService.SyncUsers();
+
+            var totalUsers =
+                Plugin.Instance?
+                    .Configuration
+                    .UserMappings?
+                    .Count
+                ?? 0;
+
+            return Ok(new
+            {
+                success = true,
+                addedUsers,
+                totalUsers,
+                message =
+                    $"{addedUsers} new Jellyfin user(s) imported."
+            });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(
+                500,
+                new
+                {
+                    success = false,
+                    message =
+                        "Failed to import Jellyfin users.",
+                    error =
+                        ex.Message
+                });
+        }
     }
 
     /// <summary>
-    /// Returns all Jellyfin users and their Discord mappings.
+    /// Returns all currently imported Jellyfin users
+    /// and their Discord mappings.
     /// </summary>
-    /// <returns>The Jellyfin users.</returns>
+    /// <returns>The imported user mappings.</returns>
     [HttpGet("Users")]
     public ActionResult GetUsers()
     {
@@ -57,40 +87,33 @@ public class SeerrWebhookController : ControllerBase
                 "Plugin configuration is not available.");
         }
 
-        // Jellyfin 10.11.8 exposes users through IUserManager.Users.
-        var jellyfinUsers =
-            _userManager.Users;
+        configuration.UserMappings ??=
+            new();
 
-        var users = jellyfinUsers
-            .Select(user =>
-            {
-                var mapping =
-                    configuration.UserMappings
-                        .FirstOrDefault(x =>
-                            x.JellyfinUserId == user.Id);
+        var importedMappings =
+            configuration.UserMappings
+                .OrderBy(x =>
+                    x.JellyfinUsername)
+                .Select(mapping =>
+                    new
+                    {
+                        jellyfinUserId =
+                            mapping.JellyfinUserId
+                                .ToString(),
 
-                return new
-                {
-                    jellyfinUserId =
-                        user.Id.ToString(),
+                        jellyfinUsername =
+                            mapping.JellyfinUsername,
 
-                    jellyfinUsername =
-                        user.Username,
+                        discordUserId =
+                            mapping.DiscordUserId
+                            ?? string.Empty,
 
-                    discordUserId =
-                        mapping?.DiscordUserId
-                        ?? string.Empty,
+                        enabled =
+                            mapping.Enabled
+                    })
+                .ToList();
 
-                    enabled =
-                        mapping?.Enabled
-                        ?? true
-                };
-            })
-            .OrderBy(x =>
-                x.jellyfinUsername)
-            .ToList();
-
-        return Ok(users);
+        return Ok(importedMappings);
     }
 
     /// <summary>
@@ -128,14 +151,21 @@ public class SeerrWebhookController : ControllerBase
         }
 
         var emoji =
-            configuration.IncomingRequestEmoji;
+            configuration.IncomingRequestEmoji?.Trim()
+            ?? string.Empty;
 
         var title =
-            configuration.IncomingRequestTitle;
+            configuration.IncomingRequestTitle?.Trim()
+            ?? string.Empty;
+
+        var header =
+            BuildHeader(
+                emoji,
+                title);
 
         var message =
-            $"{emoji} {title}\n\n" +
-            "TestUser heeft **Test Movie** aangevraagd.";
+            $"{header}\n\n" +
+            "TestUser requested **Test Movie**.";
 
         await _discordWebhookService.SendMessageAsync(
             configuration.IncomingRequestWebhook,
@@ -145,7 +175,8 @@ public class SeerrWebhookController : ControllerBase
         return Ok(new
         {
             success = true,
-            message = "Incoming request test message sent."
+            message =
+                "Incoming request test message sent."
         });
     }
 
@@ -184,14 +215,21 @@ public class SeerrWebhookController : ControllerBase
         }
 
         var emoji =
-            configuration.AvailableRequestEmoji;
+            configuration.AvailableRequestEmoji?.Trim()
+            ?? string.Empty;
 
         var title =
-            configuration.AvailableRequestTitle;
+            configuration.AvailableRequestTitle?.Trim()
+            ?? string.Empty;
+
+        var header =
+            BuildHeader(
+                emoji,
+                title);
 
         var message =
-            $"{emoji} {title}\n\n" +
-            "TestUser, jouw request **Test Movie** is nu beschikbaar!";
+            $"{header}\n\n" +
+            "TestUser, your request **Test Movie** is now available!";
 
         await _discordWebhookService.SendMessageAsync(
             configuration.AvailableRequestWebhook,
@@ -201,7 +239,28 @@ public class SeerrWebhookController : ControllerBase
         return Ok(new
         {
             success = true,
-            message = "Available request test message sent."
+            message =
+                "Available request test message sent."
         });
+    }
+
+    /// <summary>
+    /// Creates a clean message header from an optional emoji and title.
+    /// </summary>
+    private static string BuildHeader(
+        string emoji,
+        string title)
+    {
+        if (string.IsNullOrWhiteSpace(emoji))
+        {
+            return title;
+        }
+
+        if (string.IsNullOrWhiteSpace(title))
+        {
+            return emoji;
+        }
+
+        return $"{emoji} {title}";
     }
 }

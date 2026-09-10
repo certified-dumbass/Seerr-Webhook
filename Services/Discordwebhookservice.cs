@@ -29,7 +29,8 @@ public class DiscordWebhookService
         var payload = new
         {
             content = message,
-            allowed_mentions = CreateAllowedMentions(message)
+            allowed_mentions =
+                CreateAllowedMentions(message)
         };
 
         using var response =
@@ -106,8 +107,9 @@ public class DiscordWebhookService
                 new
                 {
                     name = "Media type",
-                    value = FormatMediaType(
-                        seerrPayload.MediaType),
+                    value =
+                        FormatMediaType(
+                            seerrPayload.MediaType),
                     inline = true
                 });
         }
@@ -118,8 +120,9 @@ public class DiscordWebhookService
             fields.Add(
                 new
                 {
-                    name = "Aangevraagd door",
-                    value = seerrPayload.RequestedBy,
+                    name = "Requested by",
+                    value =
+                        seerrPayload.RequestedBy,
                     inline = true
                 });
         }
@@ -131,7 +134,8 @@ public class DiscordWebhookService
                 new
                 {
                     name = "Request ID",
-                    value = seerrPayload.RequestId,
+                    value =
+                        seerrPayload.RequestId,
                     inline = true
                 });
         }
@@ -148,11 +152,26 @@ public class DiscordWebhookService
             };
         }
 
+        var mentionIds =
+            ExtractDiscordUserIds(message);
+
+        string? mentionContent = null;
+
+        if (mentionIds.Length > 0)
+        {
+            mentionContent =
+                string.Join(
+                    " ",
+                    mentionIds.Select(
+                        id => $"<@{id}>"));
+        }
+
         var embed = new
         {
             title,
             description = message,
-            fields = fields.ToArray(),
+            fields =
+                fields.ToArray(),
             thumbnail,
             timestamp =
                 DateTime.UtcNow
@@ -161,13 +180,28 @@ public class DiscordWebhookService
 
         var discordPayload = new
         {
-            content = (string?)null,
+            /*
+             * Discord mentions are placed in the normal
+             * message content as well as inside the embed.
+             * This makes real Discord notifications/pings
+             * more reliable.
+             */
+            content =
+                mentionContent,
+
             embeds = new[]
             {
                 embed
             },
-            allowed_mentions =
-                CreateAllowedMentions(message)
+
+            allowed_mentions = new
+            {
+                parse =
+                    Array.Empty<string>(),
+
+                users =
+                    mentionIds
+            }
         };
 
         using var response =
@@ -193,7 +227,7 @@ public class DiscordWebhookService
                 seerrPayload.MediaType))
         {
             result +=
-                $"\n\nType: " +
+                $"\n\nMedia type: " +
                 $"{FormatMediaType(seerrPayload.MediaType)}";
         }
 
@@ -217,6 +251,11 @@ public class DiscordWebhookService
     private static string[] ExtractDiscordUserIds(
         string message)
     {
+        if (string.IsNullOrWhiteSpace(message))
+        {
+            return Array.Empty<string>();
+        }
+
         var ids =
             new List<string>();
 
@@ -290,19 +329,19 @@ public class DiscordWebhookService
         if (string.IsNullOrWhiteSpace(
                 mediaType))
         {
-            return "Onbekend";
+            return "Unknown";
         }
 
         return mediaType
             .Trim()
             .ToLowerInvariant() switch
         {
-            "movie" => "Film",
-            "tv" => "Serie",
-            "series" => "Serie",
-            "season" => "Seizoen",
-            "episode" => "Aflevering",
-            _ => mediaType
+            "movie" => "Movie",
+            "tv" => "TV Series",
+            "series" => "TV Series",
+            "season" => "Season",
+            "episode" => "Episode",
+            _ => mediaType.Trim()
         };
     }
 }

@@ -11,27 +11,33 @@ public class PluginConfiguration : BasePluginConfiguration
 
         SeerrWebhookToken = string.Empty;
 
+        // New requests
         IncomingRequestEnabled = true;
         IncomingRequestWebhook = string.Empty;
         IncomingRequestEmoji = "🎬";
-        IncomingRequestTitle = "Nieuwe request";
-        IncomingRequestMessage = "{user} heeft **{title}** aangevraagd.";
+        IncomingRequestTitle = "New request";
+        IncomingRequestMessage =
+            "{user} requested **{title}**.";
 
+        // Available requests
         AvailableRequestEnabled = true;
         AvailableRequestWebhook = string.Empty;
         AvailableRequestEmoji = "✅";
-        AvailableRequestTitle = "Request beschikbaar";
+        AvailableRequestTitle = "Request available";
         AvailableRequestMessage =
-            "{mention} jouw request **{title}** is nu beschikbaar!";
+            "{mention} your request **{title}** is now available!";
 
         MentionDiscordUser = true;
-
         SendAvailableWithoutMapping = true;
 
+        // Discord appearance
         ShowPoster = true;
         ShowMediaType = true;
         UseEmbeds = true;
 
+        // User mappings start empty.
+        // Jellyfin users are added manually through
+        // the "Import Users" button in the configuration page.
         UserMappings = new List<UserDiscordMapping>();
     }
 
@@ -39,7 +45,7 @@ public class PluginConfiguration : BasePluginConfiguration
 
     public string SeerrWebhookToken { get; set; }
 
-    // Incoming requests
+    // New requests
 
     public bool IncomingRequestEnabled { get; set; }
 
@@ -75,7 +81,7 @@ public class PluginConfiguration : BasePluginConfiguration
 
     public bool ShowMediaType { get; set; }
 
-    // Users
+    // User mappings
 
     public List<UserDiscordMapping> UserMappings { get; set; }
 }

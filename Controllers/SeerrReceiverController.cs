@@ -54,15 +54,18 @@ public class SeerrReceiverController : ControllerBase
                 "Invalid Seerr webhook token.");
         }
 
+        var rawNotificationType =
+            payload.GetNotificationType();
+
         if (string.IsNullOrWhiteSpace(
-                payload.NotificationType))
+                rawNotificationType))
         {
             return BadRequest(
-                "notificationType is missing.");
+                "notificationType or event is missing.");
         }
 
         var notificationType =
-            payload.NotificationType
+            rawNotificationType
                 .Trim()
                 .ToUpperInvariant();
 
@@ -212,8 +215,8 @@ public class SeerrReceiverController : ControllerBase
             new List<UserDiscordMapping>();
 
         /*
-         * Eerst proberen we te matchen op de echte Jellyfin User ID.
-         * Dit is de meest betrouwbare methode.
+         * First try to match using the real Jellyfin User ID.
+         * This is the most reliable method.
          */
         if (Guid.TryParse(
                 payload.JellyfinUserId,
@@ -233,8 +236,8 @@ public class SeerrReceiverController : ControllerBase
 
         /*
          * Fallback:
-         * Als Seerr geen Jellyfin User ID meestuurt,
-         * proberen we de Jellyfin username.
+         * If Seerr does not provide a Jellyfin User ID,
+         * try to match using the Jellyfin username.
          */
         if (!string.IsNullOrWhiteSpace(
                 payload.RequestedBy))
@@ -254,11 +257,11 @@ public class SeerrReceiverController : ControllerBase
         string configuredToken)
     {
         /*
-         * Geen token ingesteld?
-         * Dan accepteren we de webhook zonder token.
+         * No token configured?
+         * Accept the webhook without authentication.
          *
-         * Voor productie raad ik wel aan om altijd
-         * een token in te stellen.
+         * A token is recommended when the webhook endpoint
+         * is publicly accessible.
          */
         if (string.IsNullOrWhiteSpace(
                 configuredToken))
@@ -267,15 +270,15 @@ public class SeerrReceiverController : ControllerBase
         }
 
         /*
-         * Eerst Authorization header controleren.
+         * Check the Authorization header first.
          *
-         * Ondersteund:
+         * Supported:
          *
-         * Authorization: Bearer MIJNTOKEN
+         * Authorization: Bearer TOKEN
          *
-         * en:
+         * and:
          *
-         * Authorization: MIJNTOKEN
+         * Authorization: TOKEN
          */
         var authorization =
             Request.Headers.Authorization
@@ -306,12 +309,9 @@ public class SeerrReceiverController : ControllerBase
         }
 
         /*
-         * Daarnaast ondersteunen we een custom header.
+         * Also support a custom header:
          *
-         * X-Seerr-Token: MIJNTOKEN
-         *
-         * Handig als Seerr met custom headers
-         * makkelijker werkt.
+         * X-Seerr-Token: TOKEN
          */
         var customToken =
             Request.Headers["X-Seerr-Token"]

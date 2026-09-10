@@ -40,28 +40,41 @@ public class SeerrWebhookPayload
     [JsonPropertyName("jellyfinMediaId")]
     public string JellyfinMediaId { get; set; } = string.Empty;
 
+    /// <summary>
+    /// Returns the best available title for the media.
+    /// </summary>
     public string GetDisplayTitle()
     {
         if (!string.IsNullOrWhiteSpace(Title))
         {
-            return Title;
+            return Title.Trim();
         }
 
         if (!string.IsNullOrWhiteSpace(Subject))
         {
-            return Subject;
+            return Subject.Trim();
         }
 
-        return "Onbekende titel";
+        return "Unknown title";
     }
 
+    /// <summary>
+    /// Returns the notification type supplied by Seerr.
+    /// Falls back to the event field when notificationType
+    /// is not available.
+    /// </summary>
     public string GetNotificationType()
     {
         if (!string.IsNullOrWhiteSpace(NotificationType))
         {
-            return NotificationType;
+            return NotificationType.Trim();
         }
 
-        return Event;
+        if (!string.IsNullOrWhiteSpace(Event))
+        {
+            return Event.Trim();
+        }
+
+        return string.Empty;
     }
 }
