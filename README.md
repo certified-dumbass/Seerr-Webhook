@@ -7,8 +7,6 @@ Seerr Discord is a Jellyfin plugin that connects **Seerr requests with Discord**
 
 When a Jellyfin user requests a movie or series through Seerr, the plugin can automatically send a notification to Discord. Once the requested media becomes available, the plugin can send another notification and mention the Discord account linked to that Jellyfin user.
 
-![Seerr Discord](thumbnail.png)
-
 ## ✨ Features
 
 * 🎬 Send Discord notifications when a new Seerr request is created
