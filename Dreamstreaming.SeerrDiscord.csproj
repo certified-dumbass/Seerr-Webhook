@@ -1,14 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
 
     <AssemblyName>Dreamstreaming.SeerrDiscord</AssemblyName>
     <RootNamespace>Dreamstreaming.SeerrDiscord</RootNamespace>
 
-    <Version>1.0.2</Version>
-    <AssemblyVersion>1.0.2.0</AssemblyVersion>
-    <FileVersion>1.0.2.0</FileVersion>
+    <Version>1.0.3</Version>
+    <AssemblyVersion>1.0.3.0</AssemblyVersion>
+    <FileVersion>1.0.3.0</FileVersion>
 
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <Nullable>enable</Nullable>
@@ -18,18 +18,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Jellyfin.Controller" Version="10.11.8">
+    <PackageReference Include="Jellyfin.Controller" Version="12.4.0">
       <ExcludeAssets>runtime</ExcludeAssets>
     </PackageReference>
 
-    <PackageReference Include="Jellyfin.Model" Version="10.11.8">
+    <PackageReference Include="Jellyfin.Model" Version="12.4.0">
       <ExcludeAssets>runtime</ExcludeAssets>
     </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Configuration\configPage.html" />
-    <EmbeddedResource Include="Configuration\configPage.html" />
+    <None Remove="Configuration/configPage.html" />
+    <EmbeddedResource Include="Configuration/configPage.html" />
   </ItemGroup>
 
 </Project>
