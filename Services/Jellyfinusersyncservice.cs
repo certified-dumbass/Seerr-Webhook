@@ -37,7 +37,7 @@ public class JellyfinUserSyncService
 
         var jellyfinUsers =
             _userManager
-                .Users
+                .GetUsers()
                 .ToList();
 
         var addedUsers = 0;
