@@ -1,0 +1,36 @@
+name: Publish Seerr Webhook v1.0.3
+on:
+  push:
+    branches: [codex/publish-v1.0.3]
+    paths: [.github/workflows/publish-v1.0.3.yml]
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: a5def8cec902f99e53d13be34197824797683011
+          persist-credentials: false
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+      - name: Build
+        run: dotnet build Dreamstreaming.SeerrDiscord.csproj --configuration Release
+      - name: Package and publish
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          archive=Seerr-Webhook_1.0.3.zip
+          zip -j "$archive" bin/Release/net10.0/Dreamstreaming.SeerrDiscord.dll
+          unzip -t "$archive"
+          md5sum "$archive"
+          gh release create v1.0.3 "$archive" \
+            --target a5def8cec902f99e53d13be34197824797683011 \
+            --title "Seerr Webhook v1.0.3" \
+            --notes "Built for Jellyfin 12.4 and .NET 10. Retains the plugin ID, webhook endpoint and configuration."
