@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: a5def8cec902f99e53d13be34197824797683011
+          ref: 25de2cc588716f9216c9ba2cc9edf58f5ab75082
           persist-credentials: false
       - uses: actions/setup-dotnet@v4
         with:
@@ -31,6 +31,6 @@ jobs:
           unzip -t "$archive"
           md5sum "$archive"
           gh release create v1.0.3 "$archive" \
-            --target a5def8cec902f99e53d13be34197824797683011 \
+            --target 25de2cc588716f9216c9ba2cc9edf58f5ab75082 \
             --title "Seerr Webhook v1.0.3" \
             --notes "Built for Jellyfin 12.4 and .NET 10. Retains the plugin ID, webhook endpoint and configuration."
